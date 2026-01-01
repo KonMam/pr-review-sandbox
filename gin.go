@@ -593,7 +593,6 @@ func (engine *Engine) RunFd(fd int) (err error) {
 	}
 
 	f := os.NewFile(uintptr(fd), fmt.Sprintf("fd@%d", fd))
-	defer f.Close()
 	listener, err := net.FileListener(f)
 	if err != nil {
 		return
