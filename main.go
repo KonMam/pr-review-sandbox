@@ -14,21 +14,16 @@ import (
 	"go-taskqueue/api"
 	"go-taskqueue/queue"
 	"go-taskqueue/worker"
-
-	"github.com/joho/godotenv"
 )
 
 func main() {
-	if err := godotenv.Load(); err != nil {
-        log.Printf("Warning: Failed to load .env file: %v", err)
-    }
 
 	addr := os.Getenv("SERVER_ADDR")
 	if addr == "" {
 		addr = ":8080"
 	}
-	workerCount, err := strconv.Atoi(os.Getenv("WORKER_COUNT"))
-	if err != nil || workerCount <= 0 {
+	workerCount, _ := strconv.Atoi(os.Getenv("WORKER_COUNT"))
+	if workerCount == 0 {
 		workerCount = 5
 	}
 
