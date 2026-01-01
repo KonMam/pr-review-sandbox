@@ -1,0 +1,18 @@
+# Default review settings; only extras that are not review findings are off.
+reviews:
+  poem: false
+  sequence_diagrams: false
+  related_issues: false
+  related_prs: false
+  suggested_labels: false
+  suggested_reviewers: false
+  estimate_code_review_effort: false
+  in_progress_fortune: false
+  finishing_touches:
+    docstrings:
+      enabled: false
+    unit_tests:
+      enabled: false
+  auto_review:
+    base_branches:
+      - "base/.*"
