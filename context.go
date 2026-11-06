@@ -151,9 +151,6 @@ func (ctx *Context) lookupFlag(name string) Flag {
 
 func (ctx *Context) lookupFlagSet(name string) *flag.FlagSet {
 	for _, c := range ctx.Lineage() {
-		if c.flagSet == nil {
-			continue
-		}
 		if f := c.flagSet.Lookup(name); f != nil {
 			return c.flagSet
 		}
