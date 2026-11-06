@@ -90,11 +90,7 @@ func (p *HTTPPool) PickPeer(key string) (ProtoGetter, bool) {
 	if len(p.peers) == 0 {
 		return nil, false
 	}
-	n := int(h)
-	if n < 0 {
-		n *= -1
-	}
-	if peer := p.peers[n%len(p.peers)]; peer != p.self {
+	if peer := p.peers[int(h)%len(p.peers)]; peer != p.self {
 		// TODO: pre-build a slice of *httpGetter when Set()
 		// is called to avoid these two allocations.
 		return &httpGetter{p.Transport, peer + p.basePath}, true
