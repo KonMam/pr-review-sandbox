@@ -85,9 +85,7 @@ func (c *ClusterClient) executeOnAllNodes(ctx context.Context, cmd Cmder, policy
 		return err
 	}
 
-	nodes := make([]*clusterNode, 0, len(state.Masters)+len(state.Slaves))
-	nodes = append(nodes, state.Masters...)
-	nodes = append(nodes, state.Slaves...)
+	nodes := append(state.Masters, state.Slaves...)
 	if len(nodes) == 0 {
 		return errClusterNoNodes
 	}
@@ -496,11 +494,10 @@ func (c *ClusterClient) pickArbitraryNode(ctx context.Context) *clusterNode {
 		return nil
 	}
 
-	idx := c.opt.ShardPicker.Next(len(state.Masters) + len(state.Slaves))
-	if idx < len(state.Masters) {
-		return state.Masters[idx]
-	}
-	return state.Slaves[idx-len(state.Masters)]
+	allNodes := append(state.Masters, state.Slaves...)
+
+	idx := c.opt.ShardPicker.Next(len(allNodes))
+	return allNodes[idx]
 }
 
 // hasKeys checks if a command operates on keys
